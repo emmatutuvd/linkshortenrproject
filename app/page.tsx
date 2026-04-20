@@ -1,4 +1,4 @@
-import { Link2, BarChart3, Zap, Shield } from "lucide-react";
+import { Link2, BarChart3 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { HeroCTA } from "@/components/hero-cta";
 
@@ -14,18 +14,6 @@ const features = [
     title: "Track every click",
     description:
       "See how many times your link has been clicked. Know what's working and what's not.",
-  },
-  {
-    icon: Zap,
-    title: "Instant redirects",
-    description:
-      "Your visitors are redirected immediately — no loading screens, no friction.",
-  },
-  {
-    icon: Shield,
-    title: "Secure & reliable",
-    description:
-      "All links are stored securely and scoped to your account. Only you can manage your links.",
   },
 ];
 
