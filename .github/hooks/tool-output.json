@@ -1,11 +1,11 @@
-{
-  "version": 1,
-  "hooks": {
-    "postToolUse": [
-      {
-        "type": "command",
-        "bash": "cat > tmp/$(date +%s).json"
-      }
-    ]
-  }
-}
+// {
+//   "version": 1,
+//   "hooks": {
+//     "postToolUse": [
+//       {
+//         "type": "command",
+//        // "bash": "cat > tmp/$(date +%s).json"
+//       }
+//     ]
+//   }
+// }
