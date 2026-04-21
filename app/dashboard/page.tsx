@@ -1,10 +1,10 @@
-import { auth } from '@clerk/nextjs/server';
-import { getLinksByUserId } from '@/data/links';
-import { Card, CardContent } from '@/components/ui/card';
-import { Link2, ExternalLink } from 'lucide-react';
-import { CreateLinkDialog } from './create-link-dialog';
-import { EditLinkDialog } from './edit-link-dialog';
-import { DeleteLinkDialog } from './delete-link-dialog';
+import { auth } from "@clerk/nextjs/server";
+import { getLinksByUserId } from "@/data/links";
+import { Card, CardContent } from "@/components/ui/card";
+import { Link2, ExternalLink } from "lucide-react";
+import { CreateLinkDialog } from "./create-link-dialog";
+import { EditLinkDialog } from "./edit-link-dialog";
+import { DeleteLinkDialog } from "./delete-link-dialog";
 
 export default async function DashboardPage() {
   const { userId } = await auth();

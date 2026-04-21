@@ -1,5 +1,10 @@
 import { Link2, BarChart3 } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { HeroCTA } from "@/components/hero-cta";
 
 const features = [
@@ -57,20 +62,6 @@ export default function HomePage() {
               </Card>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Bottom CTA */}
-      <section className="border-t px-6 py-20">
-        <div className="mx-auto flex max-w-xl flex-col items-center gap-6 text-center">
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Ready to get started?
-          </h2>
-          <p className="text-muted-foreground">
-            Sign up for free and start shortening links today. No credit card
-            required.
-          </p>
-          <HeroCTA />
         </div>
       </section>
     </main>

@@ -1,6 +1,7 @@
 ---
 description: This file describes the styling rules and best practices for the project. Read this before creating or modifying any UI components.
 ---
+
 # Styling — Tailwind CSS v4 + shadcn/ui
 
 ## Rules
@@ -23,11 +24,11 @@ This generates the component into `components/ui/`. Treat generated files as own
 
 ```ts
 // Correct
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 // Wrong — never import from the shadcn package directly
-import { Button } from 'shadcn/ui';
+import { Button } from "shadcn/ui";
 ```
 
 ## Merging Classes — `cn()`
@@ -51,7 +52,7 @@ import { cn } from '@/lib/utils';
 Use `lucide-react` for all icons:
 
 ```ts
-import { LinkIcon, Trash2 } from 'lucide-react';
+import { LinkIcon, Trash2 } from "lucide-react";
 ```
 
 Do not use other icon libraries.

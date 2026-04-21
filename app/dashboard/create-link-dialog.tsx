@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Plus } from 'lucide-react';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Plus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -10,34 +10,34 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { createLinkAction } from './actions';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { createLinkAction } from "./actions";
 
 export function CreateLinkDialog() {
   const [open, setOpen] = useState(false);
-  const [url, setUrl] = useState('');
-  const [shortCode, setShortCode] = useState('');
-  const [error, setError] = useState('');
+  const [url, setUrl] = useState("");
+  const [shortCode, setShortCode] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     const result = await createLinkAction({ url, shortCode });
 
-    if ('error' in result) {
-      setError(result.error || 'An error occurred');
+    if ("error" in result) {
+      setError(result.error || "An error occurred");
       setIsLoading(false);
     } else {
       // Success - reset form and close dialog
-      setUrl('');
-      setShortCode('');
+      setUrl("");
+      setShortCode("");
       setOpen(false);
       setIsLoading(false);
       router.refresh();
@@ -85,9 +85,7 @@ export function CreateLinkDialog() {
               Letters, numbers, hyphens, and underscores only
             </p>
           </div>
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
+          {error && <p className="text-sm text-destructive">{error}</p>}
           <div className="flex justify-end gap-3">
             <Button
               type="button"
@@ -98,7 +96,7 @@ export function CreateLinkDialog() {
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? 'Creating...' : 'Create Link'}
+              {isLoading ? "Creating..." : "Create Link"}
             </Button>
           </div>
         </form>

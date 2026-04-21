@@ -1,22 +1,28 @@
-'use server';
+"use server";
 
-import { auth } from '@clerk/nextjs/server';
-import { z } from 'zod';
-import { createLink, updateLink, deleteLink } from '@/data/links';
-import { db } from '@/db';
-import { links } from '@/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { auth } from "@clerk/nextjs/server";
+import { z } from "zod";
+import { createLink, updateLink, deleteLink } from "@/data/links";
+import { db } from "@/db";
+import { links } from "@/db/schema";
+import { eq, and } from "drizzle-orm";
 
 const createLinkSchema = z.object({
-  url: z.string().url('Please enter a valid URL'),
+  url: z.string().url("Please enter a valid URL"),
   shortCode: z
     .string()
-    .min(1, 'Short code is required')
-    .max(50, 'Short code must be 50 characters or less')
-    .regex(/^[a-zA-Z0-9_-]+$/, 'Short code can only contain letters, numbers, hyphens, and underscores'),
+    .min(1, "Short code is required")
+    .max(50, "Short code must be 50 characters or less")
+    .regex(
+      /^[a-zA-Z0-9_-]+$/,
+      "Short code can only contain letters, numbers, hyphens, and underscores",
+    ),
 });
 
-export async function createLinkAction(input: { url: string; shortCode: string }) {
+export async function createLinkAction(input: {
+  url: string;
+  shortCode: string;
+}) {
   try {
     // 1. Validate
     const result = createLinkSchema.safeParse(input);
@@ -28,7 +34,7 @@ export async function createLinkAction(input: { url: string; shortCode: string }
     // 2. Authenticate
     const { userId } = await auth();
     if (!userId) {
-      return { error: 'Unauthorized' };
+      return { error: "Unauthorized" };
     }
 
     // 3. Check if short code already exists
@@ -39,7 +45,9 @@ export async function createLinkAction(input: { url: string; shortCode: string }
       .limit(1);
 
     if (existing.length > 0) {
-      return { error: 'This short code is already taken. Please choose another one.' };
+      return {
+        error: "This short code is already taken. Please choose another one.",
+      };
     }
 
     // 4. Create link via helper
@@ -51,21 +59,28 @@ export async function createLinkAction(input: { url: string; shortCode: string }
 
     return { success: true, data: link };
   } catch (error) {
-    return { error: 'Failed to create link. Please try again.' };
+    return { error: "Failed to create link. Please try again." };
   }
 }
 
 const updateLinkSchema = z.object({
-  id: z.string().uuid('Invalid link ID'),
-  url: z.string().url('Please enter a valid URL'),
+  id: z.string().uuid("Invalid link ID"),
+  url: z.string().url("Please enter a valid URL"),
   shortCode: z
     .string()
-    .min(1, 'Short code is required')
-    .max(50, 'Short code must be 50 characters or less')
-    .regex(/^[a-zA-Z0-9_-]+$/, 'Short code can only contain letters, numbers, hyphens, and underscores'),
+    .min(1, "Short code is required")
+    .max(50, "Short code must be 50 characters or less")
+    .regex(
+      /^[a-zA-Z0-9_-]+$/,
+      "Short code can only contain letters, numbers, hyphens, and underscores",
+    ),
 });
 
-export async function updateLinkAction(input: { id: string; url: string; shortCode: string }) {
+export async function updateLinkAction(input: {
+  id: string;
+  url: string;
+  shortCode: string;
+}) {
   try {
     // 1. Validate
     const result = updateLinkSchema.safeParse(input);
@@ -77,7 +92,7 @@ export async function updateLinkAction(input: { id: string; url: string; shortCo
     // 2. Authenticate
     const { userId } = await auth();
     if (!userId) {
-      return { error: 'Unauthorized' };
+      return { error: "Unauthorized" };
     }
 
     // 3. Check if short code already exists (excluding current link)
@@ -85,15 +100,14 @@ export async function updateLinkAction(input: { id: string; url: string; shortCo
       .select()
       .from(links)
       .where(
-        and(
-          eq(links.shortCode, validated.shortCode),
-          eq(links.userId, userId)
-        )
+        and(eq(links.shortCode, validated.shortCode), eq(links.userId, userId)),
       )
       .limit(1);
 
     if (existing.length > 0 && existing[0].id !== validated.id) {
-      return { error: 'This short code is already taken. Please choose another one.' };
+      return {
+        error: "This short code is already taken. Please choose another one.",
+      };
     }
 
     // 4. Update link via helper
@@ -105,17 +119,19 @@ export async function updateLinkAction(input: { id: string; url: string; shortCo
     });
 
     if (!link) {
-      return { error: 'Link not found or you do not have permission to edit it.' };
+      return {
+        error: "Link not found or you do not have permission to edit it.",
+      };
     }
 
     return { success: true, data: link };
   } catch (error) {
-    return { error: 'Failed to update link. Please try again.' };
+    return { error: "Failed to update link. Please try again." };
   }
 }
 
 const deleteLinkSchema = z.object({
-  id: z.string().uuid('Invalid link ID'),
+  id: z.string().uuid("Invalid link ID"),
 });
 
 export async function deleteLinkAction(input: { id: string }) {
@@ -130,7 +146,7 @@ export async function deleteLinkAction(input: { id: string }) {
     // 2. Authenticate
     const { userId } = await auth();
     if (!userId) {
-      return { error: 'Unauthorized' };
+      return { error: "Unauthorized" };
     }
 
     // 3. Delete link via helper
@@ -140,11 +156,13 @@ export async function deleteLinkAction(input: { id: string }) {
     });
 
     if (!link) {
-      return { error: 'Link not found or you do not have permission to delete it.' };
+      return {
+        error: "Link not found or you do not have permission to delete it.",
+      };
     }
 
     return { success: true, data: link };
   } catch (error) {
-    return { error: 'Failed to delete link. Please try again.' };
+    return { error: "Failed to delete link. Please try again." };
   }
 }

@@ -1,6 +1,6 @@
-import { db } from '@/db';
-import { links } from '@/db/schema';
-import { eq, desc, and } from 'drizzle-orm';
+import { db } from "@/db";
+import { links } from "@/db/schema";
+import { eq, desc, and } from "drizzle-orm";
 
 export async function getLinksByUserId(userId: string) {
   return db
@@ -10,7 +10,11 @@ export async function getLinksByUserId(userId: string) {
     .orderBy(desc(links.createdAt));
 }
 
-export async function createLink(data: { userId: string; shortCode: string; url: string }) {
+export async function createLink(data: {
+  userId: string;
+  shortCode: string;
+  url: string;
+}) {
   const [link] = await db
     .insert(links)
     .values({
@@ -22,7 +26,12 @@ export async function createLink(data: { userId: string; shortCode: string; url:
   return link;
 }
 
-export async function updateLink(data: { id: string; userId: string; shortCode: string; url: string }) {
+export async function updateLink(data: {
+  id: string;
+  userId: string;
+  shortCode: string;
+  url: string;
+}) {
   const [link] = await db
     .update(links)
     .set({
@@ -30,10 +39,7 @@ export async function updateLink(data: { id: string; userId: string; shortCode: 
       url: data.url,
       updatedAt: new Date(),
     })
-    .where(and(
-      eq(links.id, data.id),
-      eq(links.userId, data.userId)
-    ))
+    .where(and(eq(links.id, data.id), eq(links.userId, data.userId)))
     .returning();
   return link;
 }
@@ -41,10 +47,7 @@ export async function updateLink(data: { id: string; userId: string; shortCode: 
 export async function deleteLink(data: { id: string; userId: string }) {
   const [link] = await db
     .delete(links)
-    .where(and(
-      eq(links.id, data.id),
-      eq(links.userId, data.userId)
-    ))
+    .where(and(eq(links.id, data.id), eq(links.userId, data.userId)))
     .returning();
   return link;
 }

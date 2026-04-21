@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Trash2 } from 'lucide-react';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Trash2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -10,9 +10,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { deleteLinkAction } from './actions';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { deleteLinkAction } from "./actions";
 
 interface DeleteLinkDialogProps {
   link: {
@@ -23,18 +23,18 @@ interface DeleteLinkDialogProps {
 
 export function DeleteLinkDialog({ link }: DeleteLinkDialogProps) {
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
-    setError('');
+    setError("");
     setIsLoading(true);
 
     const result = await deleteLinkAction({ id: link.id });
 
-    if ('error' in result) {
-      setError(result.error || 'An error occurred');
+    if ("error" in result) {
+      setError(result.error || "An error occurred");
       setIsLoading(false);
     } else {
       // Success - close dialog
@@ -53,12 +53,11 @@ export function DeleteLinkDialog({ link }: DeleteLinkDialogProps) {
         <DialogHeader>
           <DialogTitle>Delete Link</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete the link <strong>/{link.shortCode}</strong>? This action cannot be undone.
+            Are you sure you want to delete the link{" "}
+            <strong>/{link.shortCode}</strong>? This action cannot be undone.
           </DialogDescription>
         </DialogHeader>
-        {error && (
-          <p className="text-sm text-destructive">{error}</p>
-        )}
+        {error && <p className="text-sm text-destructive">{error}</p>}
         <div className="flex justify-end gap-3">
           <Button
             type="button"
@@ -74,7 +73,7 @@ export function DeleteLinkDialog({ link }: DeleteLinkDialogProps) {
             onClick={handleDelete}
             disabled={isLoading}
           >
-            {isLoading ? 'Deleting...' : 'Delete'}
+            {isLoading ? "Deleting..." : "Delete"}
           </Button>
         </div>
       </DialogContent>

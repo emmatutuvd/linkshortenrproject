@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Pencil } from 'lucide-react';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Pencil } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -10,11 +10,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { updateLinkAction } from './actions';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { updateLinkAction } from "./actions";
 
 interface EditLinkDialogProps {
   link: {
@@ -28,19 +28,19 @@ export function EditLinkDialog({ link }: EditLinkDialogProps) {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState(link.url);
   const [shortCode, setShortCode] = useState(link.shortCode);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     const result = await updateLinkAction({ id: link.id, url, shortCode });
 
-    if ('error' in result) {
-      setError(result.error || 'An error occurred');
+    if ("error" in result) {
+      setError(result.error || "An error occurred");
       setIsLoading(false);
     } else {
       // Success - close dialog
@@ -56,7 +56,7 @@ export function EditLinkDialog({ link }: EditLinkDialogProps) {
     if (newOpen) {
       setUrl(link.url);
       setShortCode(link.shortCode);
-      setError('');
+      setError("");
     }
   };
 
@@ -100,9 +100,7 @@ export function EditLinkDialog({ link }: EditLinkDialogProps) {
               Letters, numbers, hyphens, and underscores only
             </p>
           </div>
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
+          {error && <p className="text-sm text-destructive">{error}</p>}
           <div className="flex justify-end gap-3">
             <Button
               type="button"
@@ -113,7 +111,7 @@ export function EditLinkDialog({ link }: EditLinkDialogProps) {
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? 'Saving...' : 'Save Changes'}
+              {isLoading ? "Saving..." : "Save Changes"}
             </Button>
           </div>
         </form>

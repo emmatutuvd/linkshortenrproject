@@ -32,12 +32,13 @@ description: This file describes the server actions architecture and best practi
 
 - **Every Server Action MUST check for a logged-in user** before performing any database operations.
 - Use Clerk's `auth()` helper to retrieve `userId`:
+
   ```ts
-  import { auth } from '@clerk/nextjs/server';
-  
+  import { auth } from "@clerk/nextjs/server";
+
   const { userId } = await auth();
   if (!userId) {
-    return { error: 'Unauthorized' };
+    return { error: "Unauthorized" };
   }
   ```
 
@@ -51,11 +52,11 @@ description: This file describes the server actions architecture and best practi
 
 ```ts
 // app/dashboard/actions.ts
-'use server';
+"use server";
 
-import { auth } from '@clerk/nextjs/server';
-import { z } from 'zod';
-import { createLink } from '@/data/links';
+import { auth } from "@clerk/nextjs/server";
+import { z } from "zod";
+import { createLink } from "@/data/links";
 
 const createLinkSchema = z.object({
   url: z.string().url(),
@@ -66,18 +67,18 @@ export async function createLinkAction(input: { url: string; slug: string }) {
   try {
     // 1. Validate
     const validated = createLinkSchema.parse(input);
-    
+
     // 2. Authenticate
     const { userId } = await auth();
     if (!userId) {
-      return { error: 'Unauthorized' };
+      return { error: "Unauthorized" };
     }
-    
+
     // 3. Database operation via helper
     const link = await createLink({ ...validated, userId });
     return { success: true, data: link };
   } catch (error) {
-    return { error: 'Failed to create link' };
+    return { error: "Failed to create link" };
   }
 }
 ```
