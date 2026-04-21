@@ -1,3 +1,6 @@
+---
+description: This file describes the styling rules and best practices for the project. Read this before creating or modifying any UI components.
+---
 # Styling — Tailwind CSS v4 + shadcn/ui
 
 ## Rules
