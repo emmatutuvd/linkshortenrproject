@@ -1,3 +1,7 @@
+---
+description: This file describes the authentication rules and best practices for the project .
+---
+
 # Authentication — Clerk v7
 
 ## Rules
